@@ -1,0 +1,19 @@
+spring:
+  application.name: project-server
+  datasource:
+    driverClassName: org.postgresql.Driver
+    username: ${DB_USERNAME:admin}
+    password: ${DB_PASSWORD:password}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/self_boltclone_s2}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: project
+
+server.port: 9011
+
+logging.level.org.springframework.web: DEBUG
+logging.level.org.springframework.boot.web: DEBUG
