@@ -5,6 +5,7 @@
     <groupId>self</groupId>
     <artifactId>boltClone</artifactId>
     <version>0.2</version>
+    <packaging>pom</packaging>
 
     <name>boltClone</name>
     <url>http://maven.apache.org</url>
@@ -16,5 +17,6 @@
     <modules>
         <module>project-server</module>
         <module>container-server</module>
+        <module>commons</module>
     </modules>
 </project>

@@ -1,5 +1,5 @@
 spring:
-  application.name: project-server
+  application.name: container-server
 
   datasource:
     driverClassName: org.postgresql.Driver
@@ -13,7 +13,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        default_schema: project
+        default_schema: container
 
   kafka:
     bootstrap-servers: localhost:9092
@@ -26,11 +26,11 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.type.mapping: >
-          CONTAINER_CREATE:self.boltClone.event.container.ContainerCreateEvent
+          CONTAINER_CREATE:self.boltClone.event.container.ContainerCreateEvent,
           CONTAINER_CREATE_SUCCESS:self.boltClone.event.container.ContainerCreateSuccessEvent
         spring.json.trusted.packages: "*"
 
-server.port: 9011
+server.port: 9012
 
 logging.level.org.springframework.web: DEBUG
 logging.level.org.springframework.boot.web: DEBUG

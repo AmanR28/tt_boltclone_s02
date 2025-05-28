@@ -9,9 +9,12 @@ import self.boltclone.projectserver.repository.ProjectRepository;
 public class ProjectService {
     @Autowired
     ProjectRepository projectRepository;
+    @Autowired
+    EventService eventService;
 
     public String create() {
         Project project = projectRepository.create();
+        eventService.sendContainerCreateEvent(project.getId());
         return project.getId();
     }
 
