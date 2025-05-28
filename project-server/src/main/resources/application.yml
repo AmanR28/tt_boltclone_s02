@@ -26,7 +26,7 @@ spring:
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.type.mapping: >
-          CONTAINER_CREATE:self.boltClone.event.container.ContainerCreateEvent
+          CONTAINER_CREATE:self.boltClone.event.container.ContainerCreateEvent,
           CONTAINER_CREATE_SUCCESS:self.boltClone.event.container.ContainerCreateSuccessEvent
         spring.json.trusted.packages: "*"
 

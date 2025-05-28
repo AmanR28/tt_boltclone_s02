@@ -1,11 +1,18 @@
 package self.boltclone.containerserver.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import self.boltClone.event.container.ContainerCreateEvent;
+import self.boltclone.containerserver.dto.Container;
+import self.boltclone.containerserver.repository.ContainerRepository;
 
 @Service
 public class ContainerService {
-    public void create(ContainerCreateEvent event) {
-        System.out.println("Creating container for project ID: " + event.projectId());
+    @Autowired
+    ContainerRepository containerRepository;
+
+    public Container create(String projectId) {
+        String containerId = projectId + "-container-" + System.currentTimeMillis();
+        Container container = containerRepository.create(containerId);
+        return container;
     }
 }

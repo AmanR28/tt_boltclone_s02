@@ -10,11 +10,11 @@ public class ProjectService {
     @Autowired
     ProjectRepository projectRepository;
     @Autowired
-    EventService eventService;
+    EventProducerService eventProducerService;
 
     public String create() {
         Project project = projectRepository.create();
-        eventService.sendContainerCreateEvent(project.getId());
+        eventProducerService.sendContainerCreateEvent(project.getId());
         return project.getId();
     }
 
