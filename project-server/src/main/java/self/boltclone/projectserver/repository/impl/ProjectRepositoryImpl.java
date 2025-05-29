@@ -14,12 +14,16 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     @Autowired
     ProjectRepositoryJpa repository;
 
-
     @Override
     public Project create() {
         ProjectEntity entity = new ProjectEntity();
         entity.setId(UUID.randomUUID().toString());
         return toProject(repository.save(entity));
+    }
+
+    @Override
+    public Project findById(String projectId) {
+        return toProject(repository.findById(projectId).orElse(null));
     }
 
     @Override
@@ -37,6 +41,7 @@ public class ProjectRepositoryImpl implements ProjectRepository {
     }
 
     private Project toProject(ProjectEntity entity) {
-        return Project.builder().id(entity.getId()).build();
+        if (entity == null) return null;
+        return Project.builder().id(entity.getId()).containerId(entity.getContainerId()).build();
     }
 }

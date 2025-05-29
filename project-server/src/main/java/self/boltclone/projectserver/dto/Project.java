@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class Project {
     String id;
+    String containerId;
 }

@@ -14,7 +14,7 @@ public class ContainerEventConsumerService {
 
     public void handleContainerCreateSuccessEvent(ContainerCreateSuccessEvent event) {
         projectRepository.saveContainerId(event.projectId(), event.containerId());
-        log.info("Event: ContainerCreateSuccessEvent Success <|> Payload ProjectId {} | ContainerId {}", event.projectId(), event.containerId());
+        log.info("ContainerCreateSuccessEvent Success <|> Payload ProjectId {} | ContainerId {}", event.projectId(), event.containerId());
     }
 
 }
