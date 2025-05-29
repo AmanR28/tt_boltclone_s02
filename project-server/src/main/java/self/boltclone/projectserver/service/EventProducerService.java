@@ -9,6 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import self.boltClone.contant.EventConstant;
 import self.boltClone.contant.KafkaConstant;
+import self.boltClone.event.ai.AiPromptEvent;
 import self.boltClone.event.container.ContainerCreateEvent;
 
 @Service
@@ -27,5 +28,18 @@ public class EventProducerService {
                 .build();
 
         kafkaTemplate.send(message);
+    }
+
+    public void sendAiPromptEvent(String containerId, String chatId, String prompt) {
+        AiPromptEvent event = new AiPromptEvent(containerId, chatId, prompt);
+
+        Message<AiPromptEvent> message = MessageBuilder
+                .withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC, KafkaConstant.TOPIC_CONTAINER)
+                .setHeader(KafkaConstant.HEADER, EventConstant.CONTAINER_CREATE)
+                .build();
+
+        kafkaTemplate.send(message);
+
     }
 }

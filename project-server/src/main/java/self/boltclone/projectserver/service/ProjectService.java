@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import self.boltclone.projectserver.dto.Project;
 import self.boltclone.projectserver.repository.ProjectRepository;
 
+import java.util.UUID;
+
 @Service
 public class ProjectService {
     @Autowired
@@ -18,6 +20,10 @@ public class ProjectService {
         return project.getId();
     }
 
-    public void chat(String prompt, String projectId) {
+    public String chat(String projectId, String prompt) {
+        String chatId = UUID.randomUUID().toString();
+        String containerId = projectRepository.getContainerId(projectId);
+        eventProducerService.sendAiPromptEvent(containerId, chatId, prompt);
+        return chatId;
     }
 }
