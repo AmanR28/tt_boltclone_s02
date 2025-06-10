@@ -4,15 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import self.boltclone.projectserver.dto.request.ChatRequest;
 import self.boltclone.projectserver.service.ProjectService;
-import self.boltclone.projectserver.service.SocketService;
 
 @RestController
 @RequestMapping("/project")
 public class ApiController {
     @Autowired
     ProjectService projectService;
-    @Autowired
-    SocketService socketService;
 
     @PostMapping
     public String create() {
@@ -20,22 +17,22 @@ public class ApiController {
     }
 
     @GetMapping("/{project_id}")
-    public String getProject(@PathVariable String project_id) {
-        Integer status = projectService.status(project_id);
-        if (status == 404) {
-            return "Project not found";
-        } else if (status == 403) {
-            return "Project is not ready";
-        } else if (status == 200) {
-            socketService.sendMessageToProject(project_id, "CONTAINER_READY");
-            return "Project is ready";
-        }
-        return null;
+    public String status(@PathVariable String project_id) {
+        return projectService.status(project_id);
     }
 
+    @GetMapping("/{project_id}/preview")
+    public String preview(@PathVariable String project_id) {
+        return projectService.preview(project_id);
+    }
 
-    @PostMapping("/{project_id}/chat")
-    public String chat(@PathVariable String project_id, @RequestBody ChatRequest chatRequest) {
-        return projectService.chat(project_id, chatRequest.prompt());
+    @PostMapping("/{project_id}/prompt")
+    public String prompt(@PathVariable String project_id, @RequestBody ChatRequest chatRequest) {
+        return "";
+    }
+
+    @GetMapping("/{project_id}/response")
+    public String response(@PathVariable String project_id) {
+        return "";
     }
 }

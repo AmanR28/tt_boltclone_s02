@@ -20,17 +20,11 @@ public class ProjectService {
         return project.getId();
     }
 
-    public Integer status(String projectId) {
-        Project project = projectRepository.findById(projectId);
-        if (project == null) return 404;
-        if (project.getContainerId() == null) return 403;
-        return 200;
+    public String status(String projectId) {
+        return projectRepository.findById(projectId).getStatus();
     }
 
-    public String chat(String projectId, String prompt) {
-        String chatId = UUID.randomUUID().toString();
-        String containerId = projectRepository.getContainerId(projectId);
-        eventProducerService.sendAiPromptEvent(containerId, chatId, prompt);
-        return chatId;
+    public String preview(String projectId) {
+        return projectRepository.findById(projectId).getProxyUrl();
     }
 }

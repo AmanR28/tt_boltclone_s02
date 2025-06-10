@@ -3,7 +3,9 @@ package self.boltclone.projectserver.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import self.boltClone.enums.ContainerStatus;
 import self.boltClone.event.container.ContainerCreateSuccessEvent;
+import self.boltclone.projectserver.dto.Project;
 import self.boltclone.projectserver.repository.ProjectRepository;
 
 @Component
@@ -13,7 +15,10 @@ public class ContainerEventConsumerService {
     ProjectRepository projectRepository;
 
     public void handleContainerCreateSuccessEvent(ContainerCreateSuccessEvent event) {
-        projectRepository.saveContainerId(event.projectId(), event.containerId());
+        Project project = projectRepository.findById(event.projectId());
+        project.setContainerId(event.containerId());
+        project.setStatus(ContainerStatus.STARTING.toString());
+        projectRepository.save(project);
         log.info("ContainerCreateSuccessEvent Success <|> Payload ProjectId {} | ContainerId {}", event.projectId(), event.containerId());
     }
 

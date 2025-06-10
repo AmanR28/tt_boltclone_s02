@@ -8,4 +8,6 @@ import lombok.Data;
 public class Project {
     String id;
     String containerId;
+    String status;
+    String proxyUrl;
 }

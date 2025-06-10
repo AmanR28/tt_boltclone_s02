@@ -1,4 +1,4 @@
-package self.boltClone.contant;
+package self.boltClone.enums;
 
 import lombok.Getter;
 

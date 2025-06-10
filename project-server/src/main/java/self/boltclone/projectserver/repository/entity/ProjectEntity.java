@@ -18,6 +18,10 @@ public class ProjectEntity {
 
     String containerId;
 
+    String status;
+
+    String proxyUrl;
+
     @CreationTimestamp
     Timestamp createdAt;
 

@@ -12,7 +12,6 @@ public class ContainerService {
 
     public Container create(String projectId) {
         String containerId = projectId + "-container-" + System.currentTimeMillis();
-        Container container = containerRepository.create(containerId);
-        return container;
+        return containerRepository.create(containerId);
     }
 }
