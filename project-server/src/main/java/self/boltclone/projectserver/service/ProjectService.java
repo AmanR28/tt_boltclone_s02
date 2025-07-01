@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import self.boltclone.projectserver.dto.Project;
 import self.boltclone.projectserver.repository.ProjectRepository;
 
-import java.util.UUID;
-
 @Service
 public class ProjectService {
     @Autowired
@@ -26,5 +24,9 @@ public class ProjectService {
 
     public String preview(String projectId) {
         return projectRepository.findById(projectId).getProxyUrl();
+    }
+
+    public void prompt(String projectId, String prompt) {
+        eventProducerService.sendAiPromptEvent(projectId, null, prompt);
     }
 }

@@ -28,8 +28,8 @@ public class ApiController {
     }
 
     @PostMapping("/{project_id}/prompt")
-    public String prompt(@PathVariable String project_id, @RequestBody ChatRequest chatRequest) {
-        return "";
+    public void prompt(@PathVariable String project_id, @RequestBody ChatRequest chatRequest) {
+        projectService.prompt(project_id, chatRequest.prompt());
     }
 
     @GetMapping("/{project_id}/response")
