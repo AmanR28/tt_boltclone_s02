@@ -17,6 +17,7 @@
     <modules>
         <module>project-server</module>
         <module>container-server</module>
+        <module>ai-server</module>
         <module>commons</module>
     </modules>
 </project>
