@@ -12,4 +12,8 @@ import lombok.Setter;
 public class ContainerEntity {
     @Id
     private String id;
+
+    private String url;
+
+    private String status;
 }

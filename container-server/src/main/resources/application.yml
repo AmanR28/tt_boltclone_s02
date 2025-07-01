@@ -30,6 +30,15 @@ spring:
           CONTAINER_CREATE_SUCCESS:self.boltClone.event.container.ContainerCreateSuccessEvent
         spring.json.trusted.packages: "*"
 
+env:
+  aws:
+    ecs:
+      clusterId: local
+      taskId: local
+      subnetId: subnet-ed67ff3c445008897
+  container:
+    port: 8080
+
 server.port: 9012
 
 logging.level.org.springframework.web: DEBUG

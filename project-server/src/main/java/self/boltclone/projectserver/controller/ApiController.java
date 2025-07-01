@@ -2,6 +2,7 @@ package self.boltclone.projectserver.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import self.boltclone.projectserver.dto.Project;
 import self.boltclone.projectserver.dto.request.ChatRequest;
 import self.boltclone.projectserver.service.ProjectService;
 

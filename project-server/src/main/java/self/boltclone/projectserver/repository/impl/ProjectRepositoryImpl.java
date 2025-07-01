@@ -45,6 +45,6 @@ public class ProjectRepositoryImpl implements ProjectRepository {
 
     private Project toProject(ProjectEntity entity) {
         if (entity == null) return null;
-        return Project.builder().id(entity.getId()).containerId(entity.getContainerId()).status(entity.getStatus()).proxyUrl(entity.getStatus()).build();
+        return Project.builder().id(entity.getId()).containerId(entity.getContainerId()).status(entity.getStatus()).proxyUrl(entity.getProxyUrl()).build();
     }
 }

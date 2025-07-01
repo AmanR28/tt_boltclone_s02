@@ -18,6 +18,7 @@ public class ContainerEventConsumerService {
         Project project = projectRepository.findById(event.projectId());
         project.setContainerId(event.containerId());
         project.setStatus(ContainerStatus.STARTING.toString());
+        project.setProxyUrl(event.url());
         projectRepository.save(project);
         log.info("ContainerCreateSuccessEvent Success <|> Payload ProjectId {} | ContainerId {}", event.projectId(), event.containerId());
     }

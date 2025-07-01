@@ -1,7 +1,7 @@
 package self.boltclone.containerserver.repository;
 
-import self.boltclone.containerserver.dto.Container;
+import self.boltclone.containerserver.dto.ContainerDto;
 
 public interface ContainerRepository {
-    Container create(String containerId);
+    void save(ContainerDto containerDto);
 }
