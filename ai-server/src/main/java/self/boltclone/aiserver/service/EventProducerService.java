@@ -9,7 +9,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import self.boltClone.contant.KafkaConstant;
 import self.boltClone.enums.EventConstant;
-import self.boltClone.event.container.ContainerCreateSuccessEvent;
+import self.boltClone.event.ai.AiPromptResponseEvent;
 
 @Service
 @Slf4j
@@ -17,13 +17,11 @@ public class EventProducerService {
     @Autowired
     KafkaTemplate<String, Object> kafkaTemplate;
 
-    public void produceContainerCreateSuccessEvent(String projectId, String containerId,
-        String url) {
+    public void produceAiPromptSuccess(String projectId, String response) {
+        AiPromptResponseEvent event =
+            new AiPromptResponseEvent(projectId, response);
 
-        ContainerCreateSuccessEvent event =
-            new ContainerCreateSuccessEvent(projectId, containerId, url);
-
-        Message<ContainerCreateSuccessEvent> message = MessageBuilder
+        Message<AiPromptResponseEvent> message = MessageBuilder
             .withPayload(event)
             .setHeader(KafkaHeaders.TOPIC, KafkaConstant.TOPIC_CONTAINER)
             .setHeader(KafkaConstant.HEADER, EventConstant.CONTAINER_CREATE)
