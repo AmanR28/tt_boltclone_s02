@@ -1,8 +1,10 @@
 package self.boltClone.enums;
 
 public enum ProjectStatus {
+    NEW("NEW"),
     ACTIVE("ACTIVE"),
-    IN_PROGRESS("IN_PROGRESS"),
+    PROCESS_AI("PROCESS_AI"),
+    PROCESS_CODE("PROCESS_CODE"),
     DEACTIVATED("DEACTIVATED");
 
     ProjectStatus(String status) {
