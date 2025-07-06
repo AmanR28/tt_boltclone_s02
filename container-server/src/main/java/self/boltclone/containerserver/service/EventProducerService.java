@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import self.boltClone.contant.KafkaConstant;
 import self.boltClone.enums.EventConstant;
 import self.boltClone.event.container.ContainerCreateSuccessEvent;
+import self.boltClone.event.container.ContainerUpdateSuccessEvent;
 
 @Service
 @Slf4j
@@ -22,14 +23,26 @@ public class EventProducerService {
 
         ContainerCreateSuccessEvent event =
             new ContainerCreateSuccessEvent(projectId, containerId, url);
-
         Message<ContainerCreateSuccessEvent> message = MessageBuilder
             .withPayload(event)
             .setHeader(KafkaHeaders.TOPIC, KafkaConstant.TOPIC_CONTAINER)
             .setHeader(KafkaConstant.HEADER, EventConstant.CONTAINER_CREATE)
             .build();
-
         kafkaTemplate.send(message);
+        log.info("Event Produced <ContainerCreateSuccessEvent> <|> Payload: ProjectId {}, ContainerId {}, Url {}",
+            projectId, containerId, url);
+    }
+
+    public void produceContainerUpdateSuccessEvent(String projectId) {
+
+        ContainerUpdateSuccessEvent event = new ContainerUpdateSuccessEvent(projectId);
+        Message<ContainerUpdateSuccessEvent> message = MessageBuilder
+            .withPayload(event)
+            .setHeader(KafkaHeaders.TOPIC, KafkaConstant.TOPIC_CONTAINER)
+            .setHeader(KafkaConstant.HEADER, EventConstant.CONTAINER_UPDATE_SUCCESS)
+            .build();
+        kafkaTemplate.send(message);
+        log.info("Event Produced <ContainerUpdateSuccessEvent> <|> Payload: ProjectId {}", projectId);
     }
 
 }

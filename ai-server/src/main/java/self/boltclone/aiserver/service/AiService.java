@@ -12,9 +12,13 @@ public class AiService {
     @Qualifier("mockAiClient")
     private AiClient aiClient;
 
-    public String getAiResponse(String prompt) {
-        ResponseDto response = aiClient.prompt(prompt);
-        return response.getResponse();
+    public ResponseDto getAiResponse(String prompt) {
+        String aiResponse = aiClient.prompt(prompt);
+        return ResponseDto.builder()
+                .prompt(prompt)
+                .summary("This is a summary of the prompt.")
+                .code(aiResponse)
+                .build();
     }
 
 }

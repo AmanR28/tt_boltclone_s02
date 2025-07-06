@@ -9,7 +9,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -27,7 +27,11 @@ spring:
       properties:
         spring.json.type.mapping: >
           CONTAINER_CREATE:self.boltClone.event.container.ContainerCreateEvent,
-          CONTAINER_CREATE_SUCCESS:self.boltClone.event.container.ContainerCreateSuccessEvent
+          CONTAINER_CREATE_SUCCESS:self.boltClone.event.container.ContainerCreateSuccessEvent,
+          CONTAINER_UPDATE:self.boltClone.event.container.ContainerUpdateEvent,
+          CONTAINER_UPDATE_SUCCESS:self.boltClone.event.container.ContainerUpdateSuccessEvent,
+          AI_PROMPT:self.boltClone.event.ai.AiPromptEvent,
+          AI_PROMPT_SUCCESS:self.boltClone.event.ai.AiPromptSuccessEvent
         spring.json.trusted.packages: "*"
 
 server.port: 9013

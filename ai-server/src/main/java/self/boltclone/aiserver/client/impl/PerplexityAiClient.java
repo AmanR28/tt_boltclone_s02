@@ -9,7 +9,7 @@ import self.boltclone.aiserver.dto.ResponseDto;
 @Component
 public class PerplexityAiClient implements AiClient {
     @Override
-    public ResponseDto prompt(String prompt) {
-        return ResponseDto.builder().response("HI").build();
+    public String prompt(String prompt) {
+        return "Perplexity AI response for prompt: " + prompt;
     }
 }

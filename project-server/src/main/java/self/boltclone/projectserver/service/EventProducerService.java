@@ -11,6 +11,7 @@ import self.boltClone.enums.EventConstant;
 import self.boltClone.contant.KafkaConstant;
 import self.boltClone.event.ai.AiPromptEvent;
 import self.boltClone.event.container.ContainerCreateEvent;
+import self.boltClone.event.container.ContainerUpdateEvent;
 
 @Service
 @Slf4j
@@ -28,6 +29,20 @@ public class EventProducerService {
                 .build();
 
         kafkaTemplate.send(message);
+        log.info("Event Produced <ContainerCreateEvent> <|> Payload: ProjectId {}", projectId);
+    }
+
+    public void sendContainerUpdateEvent(String projectId, String containerId, String code) {
+        ContainerUpdateEvent event = new ContainerUpdateEvent(projectId, containerId, code);
+
+        Message<ContainerUpdateEvent> message = MessageBuilder
+                .withPayload(event)
+                .setHeader(KafkaHeaders.TOPIC, KafkaConstant.TOPIC_CONTAINER)
+                .setHeader(KafkaConstant.HEADER, EventConstant.CONTAINER_UPDATE)
+                .build();
+
+        kafkaTemplate.send(message);
+        log.info("Event Produced <ContainerUpdateEvent> <|> Payload: ProjectId {}, ContainerId {}", projectId, containerId);
     }
 
     public void sendAiPromptEvent(String projectId, String chatId, String prompt) {
@@ -40,6 +55,6 @@ public class EventProducerService {
                 .build();
 
         kafkaTemplate.send(message);
-
+        log.info("Event Produced <AiPromptEvent> <|> Payload: ProjectId {}, ChatId {}, Prompt {}", projectId, chatId, prompt);
     }
 }
