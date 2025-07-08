@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import self.boltclone.aiserver.client.AiClient;
 import self.boltclone.aiserver.dto.ResponseDto;
+import self.boltclone.aiserver.util.AiResponseParser;
 
 @Service
 public class AiService {
@@ -13,12 +14,9 @@ public class AiService {
     private AiClient aiClient;
 
     public ResponseDto getAiResponse(String prompt) {
+
         String aiResponse = aiClient.prompt(prompt);
-        return ResponseDto.builder()
-                .prompt(prompt)
-                .summary("This is a summary of the prompt.")
-                .code(aiResponse)
-                .build();
+        return new AiResponseParser().parseAiResponse(aiResponse);
     }
 
 }
