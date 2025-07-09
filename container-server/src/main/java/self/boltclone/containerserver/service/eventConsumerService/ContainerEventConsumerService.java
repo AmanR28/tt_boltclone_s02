@@ -22,14 +22,20 @@ public class ContainerEventConsumerService {
         ContainerDto containerDto = containerService.create();
         eventProducerService.produceContainerCreateSuccessEvent(event.projectId(),
             containerDto.getId(), containerDto.getUrl());
-        log.info("EventHandler <ContainerCreateEvent> <|> Payload ProjectId {} | ContainerId {}", event.projectId(), containerDto.getId());
+        log.info("EventHandler <ContainerCreateEvent> <|> Payload ProjectId {} | ContainerId {}",
+            event.projectId(), containerDto.getId());
     }
 
     public void handleContainerUpdateEvent(ContainerUpdateEvent event) {
-
-        Boolean success = containerService.update(event.containerId(), event.code());
-        eventProducerService.produceContainerUpdateSuccessEvent(event.projectId());
-        log.info("EventHandler <ContainerUpdateEvent> <|> Payload ProjectId {} | ContainerId {}", event.projectId(), event.containerId());
+        try {
+            containerService.update(event.containerId(), event.code());
+            eventProducerService.produceContainerUpdateSuccessEvent(event.projectId());
+            log.info(
+                "EventHandler <ContainerUpdateEvent> <|> Payload ProjectId {} | ContainerId {}",
+                event.projectId(), event.containerId());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
