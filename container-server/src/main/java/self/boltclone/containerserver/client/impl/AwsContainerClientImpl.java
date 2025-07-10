@@ -12,7 +12,7 @@ import software.amazon.awssdk.services.ecs.model.*;
 
 @Slf4j
 @Component
-public class AwsContainerClientImpl implements ContainerClient {
+public class AwsContainerClientImpl {
     @Autowired
     private EcsClient ecsClient;
 
@@ -28,7 +28,7 @@ public class AwsContainerClientImpl implements ContainerClient {
     @Value("${env.container.port}")
     private int containerPort;
 
-    @Override
+//    @Override
     public ContainerDto create() {
 
         ContainerDto containerDto = null;
@@ -40,6 +40,7 @@ public class AwsContainerClientImpl implements ContainerClient {
                         .cluster(clusterId)
                         .launchType(LaunchType.FARGATE)
                         .taskDefinition(taskId)
+                        .enableExecuteCommand(true)
                         .networkConfiguration(
                             NetworkConfiguration.builder()
                                 .awsvpcConfiguration(
@@ -75,4 +76,48 @@ public class AwsContainerClientImpl implements ContainerClient {
         return containerDto;
     }
 
+//    @Override
+    public void update(String containerId, String gitPatch) {
+        try {
+            String clusterName = clusterId;
+            String taskArn = taskId;
+
+            String createPatchCommand = createPatchFileCommand(gitPatch);
+            executeCommand(clusterName, taskArn, containerId, createPatchCommand);
+
+            // Step 2: Apply the patch
+            String applyCommand = "cd /app && git apply /tmp/current.patch";
+            executeCommand(clusterName, taskArn, containerId, applyCommand);
+
+            // Step 3: Clean up temporary file
+            executeCommand(clusterName, taskArn, containerId, "rm /tmp/current.patch");
+
+            System.out.println("Patch applied successfully for project: " + containerId);
+
+        } catch (Exception e) {
+            System.err.println("Failed to apply patch: " + e.getMessage());
+            throw new RuntimeException("Patch application failed", e);
+        }
+    }
+
+    private String createPatchFileCommand(String gitPatch) {
+        String escapedPatch = gitPatch
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+            .replace("$", "\\$")
+            .replace("`", "\\`");
+
+        return String.format("cat > /tmp/current.patch << 'EOF'\n%s\nEOF", escapedPatch);
+    }
+
+    private void executeCommand(String cluster, String taskArn, String container, String command) {
+        ExecuteCommandRequest request = ExecuteCommandRequest.builder()
+            .cluster(cluster)
+            .task(taskArn)
+            .container(container)
+            .interactive(false)
+            .command(command)
+            .build();
+        ecsClient.executeCommand(request);
+    }
 }

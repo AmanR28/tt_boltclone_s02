@@ -7,7 +7,7 @@
   "containerDefinitions": [
     {
       "name": "test",
-      "image": "dev3l/docker-node-js-webpack",
+      "image": "tt-boltclone-image",
       "portMappings": [
         {
           "containerPort": 8080,

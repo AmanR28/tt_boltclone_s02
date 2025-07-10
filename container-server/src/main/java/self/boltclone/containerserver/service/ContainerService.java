@@ -30,13 +30,12 @@ public class ContainerService {
 
     public void update(String containerId, String code) throws Exception {
 
-        ObjectMapper mapper = new ObjectMapper();
-
         PatchGenerator patchGenerator = new PatchGenerator();
         Map<String, String> codeMap = patchGenerator.parseCode(code);
         String gitPatch = patchGenerator.generateGitPatch(codeMap);
 
         System.out.println("Generated Git Patch:\n" + gitPatch);
+        containerClient.update(containerId, gitPatch);
 
         log.info("Updating container with ID: {}, code: {}", containerId, code);
     }
