@@ -29,13 +29,13 @@ public class ContainerService {
     }
 
     public void update(String containerId, String code) throws Exception {
-
+        ContainerDto containerDto = containerRepository.findById(containerId);
         PatchGenerator patchGenerator = new PatchGenerator();
         Map<String, String> codeMap = patchGenerator.parseCode(code);
         String gitPatch = patchGenerator.generateGitPatch(codeMap);
 
         System.out.println("Generated Git Patch:\n" + gitPatch);
-        containerClient.update(containerId, gitPatch);
+        containerClient.update(containerId, containerDto.getName(), gitPatch);
 
         log.info("Updating container with ID: {}, code: {}", containerId, code);
     }

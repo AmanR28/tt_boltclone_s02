@@ -9,5 +9,6 @@ import self.boltClone.enums.ContainerStatus;
 public class ContainerDto {
     private String id;
     private String url;
+    private String name;
     private ContainerStatus status;
 }

@@ -5,6 +5,6 @@ import self.boltclone.containerserver.dto.ContainerDto;
 public interface ContainerClient {
     ContainerDto create();
 
-    void update(String containerId, String gitPatch);
+    void update(String containerId, String containerName, String gitPatch);
 
 }

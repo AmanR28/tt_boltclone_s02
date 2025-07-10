@@ -16,4 +16,6 @@ public class ContainerEntity {
     private String url;
 
     private String status;
+
+    private String name;
 }
