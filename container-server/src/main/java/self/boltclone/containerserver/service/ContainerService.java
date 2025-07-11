@@ -1,7 +1,5 @@
 package self.boltclone.containerserver.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,23 +19,24 @@ public class ContainerService {
     @Autowired
     ContainerClient containerClient;
 
-    public ContainerDto create() {
+    public ContainerDto create(String projectId) {
 
-        ContainerDto containerDto = containerClient.create();
+        ContainerDto containerDto = containerClient.create(projectId);
         containerRepository.save(containerDto);
         return containerDto;
     }
 
-    public void update(String containerId, String code) throws Exception {
-        ContainerDto containerDto = containerRepository.findById(containerId);
+    public void update(String projectId, String code) throws Exception {
+
+        ContainerDto containerDto = containerRepository.findByProjectId(projectId);
         PatchGenerator patchGenerator = new PatchGenerator();
         Map<String, String> codeMap = patchGenerator.parseCode(code);
         String gitPatch = patchGenerator.generateGitPatch(codeMap);
 
         System.out.println("Generated Git Patch:\n" + gitPatch);
-        containerClient.update(containerId, containerDto.getName(), gitPatch);
+        containerClient.update(containerDto.getProjectId(), containerDto.getName(), gitPatch);
 
-        log.info("Updating container with ID: {}, code: {}", containerId, code);
+        log.info("Updating container with ID: {}, code: {}", projectId, code);
     }
 
 }

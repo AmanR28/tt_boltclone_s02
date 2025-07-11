@@ -7,6 +7,7 @@ import self.boltClone.enums.ContainerStatus;
 @Data
 @Builder
 public class ContainerDto {
+    private String projectId;
     private String id;
     private String url;
     private String name;

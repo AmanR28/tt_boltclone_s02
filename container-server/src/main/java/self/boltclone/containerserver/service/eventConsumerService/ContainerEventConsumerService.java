@@ -19,7 +19,7 @@ public class ContainerEventConsumerService {
 
     public void handleContainerCreateEvent(ContainerCreateEvent event) {
 
-        ContainerDto containerDto = containerService.create();
+        ContainerDto containerDto = containerService.create(event.projectId());
         eventProducerService.produceContainerCreateSuccessEvent(event.projectId(),
             containerDto.getId(), containerDto.getUrl());
         log.info("EventHandler <ContainerCreateEvent> <|> Payload ProjectId {} | ContainerId {}",
@@ -28,7 +28,7 @@ public class ContainerEventConsumerService {
 
     public void handleContainerUpdateEvent(ContainerUpdateEvent event) {
         try {
-            containerService.update(event.containerId(), event.code());
+            containerService.update(event.projectId(), event.code());
             eventProducerService.produceContainerUpdateSuccessEvent(event.projectId());
             log.info(
                 "EventHandler <ContainerUpdateEvent> <|> Payload ProjectId {} | ContainerId {}",

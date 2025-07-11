@@ -3,8 +3,8 @@ package self.boltclone.containerserver.client;
 import self.boltclone.containerserver.dto.ContainerDto;
 
 public interface ContainerClient {
-    ContainerDto create();
+    ContainerDto create(String projectId);
 
-    void update(String containerId, String containerName, String gitPatch);
+    void update(String projectId, String containerName, String gitPatch);
 
 }

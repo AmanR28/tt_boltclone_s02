@@ -15,7 +15,8 @@ public class ContainerRepositoryImpl implements ContainerRepository {
     @Override
     public void save(ContainerDto containerDto) {
         ContainerEntity entity = new ContainerEntity();
-        entity.setId(containerDto.getId());
+        entity.setProjectId(containerDto.getProjectId());
+        entity.setContainerId(containerDto.getId());
         entity.setUrl(containerDto.getUrl());
         entity.setStatus(containerDto.getStatus().toString());
         entity.setName(containerDto.getName());
@@ -23,14 +24,14 @@ public class ContainerRepositoryImpl implements ContainerRepository {
     }
 
     @Override
-    public ContainerDto findById(String id) {
-        ContainerEntity entity = repository.findById(id).orElseThrow(() -> new RuntimeException("Container not found"));
+    public ContainerDto findByProjectId(String projectId) {
+        ContainerEntity entity = repository.findById(projectId).orElseThrow(() -> new RuntimeException("Container not found"));
         return toContainer(entity);
     }
 
     private ContainerDto toContainer(ContainerEntity entity) {
 
-        return ContainerDto.builder().id(entity.getId()).name(entity.getName()).build();
+        return ContainerDto.builder().projectId(entity.getProjectId()).id(entity.getContainerId()).name(entity.getName()).build();
     }
 
 }

@@ -11,7 +11,9 @@ import lombok.Setter;
 @Entity
 public class ContainerEntity {
     @Id
-    private String id;
+    private String projectId;
+
+    private String containerId;
 
     private String url;
 
